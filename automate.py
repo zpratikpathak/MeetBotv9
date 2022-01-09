@@ -15,7 +15,9 @@ dp = updater.dispatcher
 # autowrite userid in .env file
 def start(update, context):
     user = update.message.from_user
-    update.message.reply_text('Hello {}!'.format(user['username']))
+    # print(user)
+    context.bot.send_chat_action(chat_id=user['id'], action=ChatAction.TYPING)
+    update.message.reply_text('Hello {}!'.format(user['first_name']))
     update.message.reply_text('Your UserID is: {} '.format(user['id']))
 
 def echo(update, context):
@@ -36,9 +38,7 @@ def help(update, context):
         )
 
 def owner(update, context):
-    update.message.reply_text(
-        "My code lies around the whole Internet 😇\nIt was assembled, modified and upgraded by Pathak Pratik\nSource Code is available here👇\nhttps://github.com/zpratikpathak/\n/userid - Your Userid",
-    )
+    update.message.reply_text("My code lies around the whole Internet 😇\nIt was assembled, modified and upgraded by Pathak Pratik\nSource Code is available here👇\nhttps://github.com/zpratikpathak/\n/userid - Your Userid",)
 
 def main():
     dp.add_handler(CommandHandler("start", start, run_async=True))
