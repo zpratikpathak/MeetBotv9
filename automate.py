@@ -29,6 +29,9 @@ def start(update, context):
         update.message.reply_text(
             "please download correct chromedriver version :", str1[0:2]
         )
+        update.message.reply_text(
+            "Download it from here :", "https://chromedriver.chromium.org/downloads"
+        )
 
 
 def echo(update, context):
