@@ -2,7 +2,7 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler, Job, Filters, MessageHandler
 from telegram import ChatAction
 
-from chromium_Scripts import browser
+from chromium_Scripts import browser, chromedriverCheck
 
 import os
 from dotenv import load_dotenv
@@ -22,6 +22,13 @@ def start(update, context):
     context.bot.send_chat_action(chat_id=user["id"], action=ChatAction.TYPING)
     update.message.reply_text("Hello {}!".format(user["first_name"]))
     update.message.reply_text("Your UserID is: {} ".format(user["id"]))
+
+    if chromedriverCheck():
+        from chromium_Scripts import str1
+
+        update.message.reply_text(
+            "please download correct chromedriver version :", str1[0:2]
+        )
 
 
 def echo(update, context):
