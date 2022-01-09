@@ -1,1 +1,3 @@
 .env
+chromium/__pycache__
+ChromiumData

@@ -2,6 +2,8 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler, Job, Filters, MessageHandler
 from telegram import ChatAction
 
+from chromium import browser
+
 import os
 from dotenv import load_dotenv
 load_dotenv()
