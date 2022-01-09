@@ -48,3 +48,6 @@ str2 = browser.capabilities["chrome"]["chromedriverVersion"].split(" ")[0]
 
 if str1[0:2] != str2[0:2]:
     telegram_bot_sendtext("please download correct chromedriver version :", str1[0:2])
+    telegram_bot_sendtext(
+        "Download it from here :", "https://chromedriver.chromium.org/downloads"
+    )
