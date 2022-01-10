@@ -2,7 +2,7 @@ from telegram.ext import Updater
 from telegram.ext import CommandHandler, Job, Filters, MessageHandler
 from telegram import ChatAction
 
-from chromium_Scripts import browser, chromedriverCheck, telegram_bot_sendtext
+from chromium_Scripts import browser, telegram_bot_sendtext
 
 from os import execl
 from sys import executable
@@ -77,6 +77,13 @@ def restart(update, context):
         update.message.reply_text(
             "You are not authorized to use this bot.\nUse /owner to know about me"
         )
+
+
+def status(update, context):
+    browser.save_screenshot("snapshot.png")
+    context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+    context.bot.send_photo(chat_id=USER_ID, photo=open("snapshot.png", "rb"), timeout=2)
+    os.remove("snapshot.png")
 
 
 def main():
