@@ -28,15 +28,16 @@ def start(update, context):
     update.message.reply_text("Hello {}!".format(user["first_name"]))
     update.message.reply_text("Your UserID is: {} ".format(user["id"]))
 
-    if chromedriverCheck():
-        from chromium_Scripts import str1
+    # Removed ChromeDriver Dependency
+    # if chromedriverCheck():
+    #     from chromium_Scripts import str1
 
-        update.message.reply_text(
-            "please download correct chromedriver version :", str1[0:2]
-        )
-        update.message.reply_text(
-            "Download it from here :", "https://chromedriver.chromium.org/downloads"
-        )
+    #     update.message.reply_text(
+    #         "please download correct chromedriver version :", str1[0:2]
+    #     )
+    #     update.message.reply_text(
+    #         "Download it from here :", "https://chromedriver.chromium.org/downloads"
+    #     )
 
 
 def echo(update, context):
@@ -50,7 +51,7 @@ def help(update, context):
     if user["id"] == int(USER_ID):
         context.bot.send_message(
             chat_id=USER_ID,
-            text="/mlogin - To login your account\n/meet - To join a meet (Use Example: '/meet https://meet.google.com/mee-tco-deval')\n/status - To get current Screenshot of Joined meet\n/exit - To leave a meeting\n/reset - To reset chromium browser (in Development)\n/owner-To know about me\n/help - To Display this message",
+            text="/mlogin - Login in GMeet\n/meet - Join a meet\n/status - Screenshot of Joined meet\n/restart - To leave a meeting\n/reset - Reset chrome browser (in Development)\n/owner-To know about me\n/help - To Display this message",
         )
     else:
         update.message.reply_text(
@@ -64,7 +65,7 @@ def owner(update, context):
     )
 
 
-# To do, send a message to the user when the bot is restarted
+# To do, send a message to the user when the bot is restarted : Finished
 def restart(update, context):
     user = update.message.from_user
     if user["id"] == int(USER_ID):
@@ -101,4 +102,4 @@ def main():
 if __name__ == "__main__":
     main()
 
-# To Do: Add restart feature
+# To Do: Add restart feature : Finished
