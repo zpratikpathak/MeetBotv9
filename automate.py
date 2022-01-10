@@ -4,6 +4,9 @@ from telegram import ChatAction
 
 from chromium_Scripts import browser, chromedriverCheck
 
+from os import execl
+from sys import executable
+
 import os
 from dotenv import load_dotenv
 
@@ -59,10 +62,24 @@ def owner(update, context):
     )
 
 
+def restart(update, context):
+    user = update.message.from_user
+    if user["id"] == int(USER_ID):
+        context.bot.send_message(chat_id=USER_ID, text="Restarting, Please wait!")
+        browser.quit()
+        execl(executable, executable, "automate.py")
+    else:
+        update.message.reply_text(
+            "You are not authorized to use this bot.\nUse /owner to know about me"
+        )
+
+
 def main():
     dp.add_handler(CommandHandler("start", start, run_async=True))
     dp.add_handler(CommandHandler("help", help, run_async=True))
     dp.add_handler(CommandHandler("owner", owner, run_async=True))
+    dp.add_handler(CommandHandler("restart", restart, run_async=True))
+
     dp.add_handler(MessageHandler(Filters.text, echo, run_async=True))
 
     updater.start_polling()
@@ -71,3 +88,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# To Do: Add restart feature
