@@ -82,7 +82,9 @@ def restart(update, context):
 def status(update, context):
     browser.save_screenshot("snapshot.png")
     context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
-    context.bot.send_photo(chat_id=USER_ID, photo=open("snapshot.png", "rb"), timeout=2)
+    context.bot.send_photo(
+        chat_id=USER_ID, photo=open("snapshot.png", "rb"), timeout=100
+    )
     os.remove("snapshot.png")
 
 
