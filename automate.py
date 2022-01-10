@@ -14,6 +14,8 @@ load_dotenv()
 
 import pickle
 
+import shutil
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USER_ID = os.getenv("USER_ID")
 
@@ -80,12 +82,45 @@ def restart(update, context):
 
 
 def status(update, context):
-    browser.save_screenshot("snapshot.png")
-    context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
-    context.bot.send_photo(
-        chat_id=USER_ID, photo=open("snapshot.png", "rb"), timeout=100
-    )
-    os.remove("snapshot.png")
+    user = update.message.from_user
+    if user["id"] == int(USER_ID):
+        browser.save_screenshot("snapshot.png")
+        context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+        context.bot.send_photo(
+            chat_id=USER_ID, photo=open("snapshot.png", "rb"), timeout=100
+        )
+        os.remove("snapshot.png")
+    else:
+        update.message.reply_text(
+            "You are not authorized to use this bot.\nUse /owner to know about me"
+        )
+
+
+def reset(update, context):
+    user = update.message.from_user
+    if user["id"] == int(USER_ID):
+        if os.path.exists("ChromiumData"):
+
+            try:
+                browser.quit()
+                shutil.rmtree("ChromiumData")
+                context.bot.send_message(
+                    chat_id=USER_ID, text="Chrome Reset Succesfull"
+                )
+                execl(executable, executable, "automate.py")
+            except OSError as e:
+                print("Error: %s - %s." % (e.filename, e.strerror))
+        else:
+            context.bot.send_message(
+                chat_id=USER_ID, text="Browser is already clear..."
+            )
+            context.bot.send_message(
+                chat_id=USER_ID, text="This feature is in development"
+            )
+    else:
+        update.message.reply_text(
+            "You are not authorized to use this bot.\nUse /owner to know about me"
+        )
 
 
 def main():
@@ -102,6 +137,7 @@ def main():
     dp.add_handler(CommandHandler("owner", owner, run_async=True))
     dp.add_handler(CommandHandler("restart", restart, run_async=True))
     dp.add_handler(CommandHandler("status", status, run_async=True))
+    dp.add_handler(CommandHandler("reset", reset, run_async=True))
 
     dp.add_handler(MessageHandler(Filters.text, echo, run_async=True))
 
