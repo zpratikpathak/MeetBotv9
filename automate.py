@@ -16,6 +16,8 @@ import pickle
 
 import shutil
 
+from gscripts.login import login
+
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USER_ID = os.getenv("USER_ID")
 
@@ -53,7 +55,7 @@ def help(update, context):
     if user["id"] == int(USER_ID):
         context.bot.send_message(
             chat_id=USER_ID,
-            text="/mlogin - Login in GMeet\n/meet - Join a meet\n/status - Screenshot of Joined meet\n/restart - To leave a meeting\n/reset - Reset chrome browser (in Development)\n/owner-To know about me\n/help - To Display this message",
+            text="/login - Login in Google Meet\n/meet - Join a meet\n/status - Screenshot of Joined meet\n/restart - To leave a meeting\n/reset - Reset chrome browser (in Development)\n/owner-To know about me\n/help - To Display this message",
         )
     else:
         update.message.reply_text(
@@ -138,6 +140,7 @@ def main():
     dp.add_handler(CommandHandler("restart", restart, run_async=True))
     dp.add_handler(CommandHandler("status", status, run_async=True))
     dp.add_handler(CommandHandler("reset", reset, run_async=True))
+    dp.add_handler(CommandHandler("login", login, run_async=True))
 
     dp.add_handler(MessageHandler(Filters.text, echo, run_async=True))
 

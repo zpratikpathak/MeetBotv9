@@ -18,6 +18,10 @@ options.add_argument("--disable-infobars")
 options.add_argument("--window-size=1200,800")
 options.add_argument(f"user-data-dir={scriptDirectory}\\ChromiumData")
 
+options.add_argument(
+    "user-agent='User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36'"
+)
+
 options.add_experimental_option(
     "prefs",
     {

@@ -1,3 +1,4 @@
 .env
 chromium_Scripts/__pycache__
 ChromiumData
+gscripts/__pycache__
