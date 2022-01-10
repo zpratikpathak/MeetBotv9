@@ -60,7 +60,7 @@ def help(update, context):
 
 def owner(update, context):
     update.message.reply_text(
-        "My code lies around the whole Internet 😇\nIt was assembled, modified and upgraded by Pathak Pratik\nSource Code is available here👇\nhttps://github.com/zpratikpathak/\n/userid - Your Userid",
+        "My code lies around the whole Internet 😇\nIt was assembled, modified and upgraded by Pathak Pratik\nSource Code is available here👇\nhttps://github.com/zpratikpathak/",
     )
 
 
