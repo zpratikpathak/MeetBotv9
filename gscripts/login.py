@@ -41,7 +41,7 @@ def login(update, context):
             browser.find_element_by_id("passwordNext").click()
             time.sleep(2)
             update.message.reply_text("Logged in!")
-
+            browser.get("https://meet.google.com/")
             browser.save_screenshot("snapshot.png")
             context.bot.send_chat_action(
                 chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO
