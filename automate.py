@@ -101,6 +101,7 @@ def main():
     dp.add_handler(CommandHandler("help", help, run_async=True))
     dp.add_handler(CommandHandler("owner", owner, run_async=True))
     dp.add_handler(CommandHandler("restart", restart, run_async=True))
+    dp.add_handler(CommandHandler("status", status, run_async=True))
 
     dp.add_handler(MessageHandler(Filters.text, echo, run_async=True))
 
