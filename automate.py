@@ -101,13 +101,13 @@ def status(update, context):
 def reset(update, context):
     user = update.message.from_user
     if user["id"] == int(USER_ID):
-        if os.path.exists("ChromiumData") or os.path.exists("meet.pkl"):
+        if os.path.exists("ChromiumData") or os.path.exists("gmeet.pkl"):
 
             try:
                 browser.quit()
                 shutil.rmtree("ChromiumData")
                 try:
-                    os.remove("meet.pkl")
+                    os.remove("gmeet.pkl")
                 except:
                     pass
                 context.bot.send_message(
@@ -119,9 +119,6 @@ def reset(update, context):
         else:
             context.bot.send_message(
                 chat_id=USER_ID, text="Browser is already clear..."
-            )
-            context.bot.send_message(
-                chat_id=USER_ID, text="This feature is in development"
             )
     else:
         update.message.reply_text(
