@@ -1,5 +1,4 @@
 from chromium_Scripts import browser
-from automate import updater
 from telegram import ChatAction
 import os, time
 from os import execl
@@ -88,7 +87,8 @@ def meet(update, context):
             meet_url(context, url_meet)
         else:
             context.bot.send_message(
-                chat_id=USER_ID, text="Oops! You forget to pass the google meet url"
+                chat_id=USER_ID,
+                text="Oops! You forget to pass the correct google meet url",
             )
             context.bot.send_message(
                 chat_id=USER_ID, text="Use /meet command like this 👇"
