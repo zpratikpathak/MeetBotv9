@@ -101,11 +101,15 @@ def status(update, context):
 def reset(update, context):
     user = update.message.from_user
     if user["id"] == int(USER_ID):
-        if os.path.exists("ChromiumData"):
+        if os.path.exists("ChromiumData") or os.path.exists("meet.pkl"):
 
             try:
                 browser.quit()
                 shutil.rmtree("ChromiumData")
+                try:
+                    os.remove("meet.pkl")
+                except:
+                    pass
                 context.bot.send_message(
                     chat_id=USER_ID, text="Chrome Reset Succesfull"
                 )
