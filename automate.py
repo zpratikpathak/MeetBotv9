@@ -17,6 +17,8 @@ import pickle
 import shutil
 
 from gscripts.login import login
+from gscripts.meet import meet
+
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USER_ID = os.getenv("USER_ID")
@@ -142,7 +144,7 @@ def main():
     dp.add_handler(CommandHandler("status", status, run_async=True))
     dp.add_handler(CommandHandler("reset", reset, run_async=True))
     dp.add_handler(CommandHandler("login", login, run_async=True))
-
+    dp.add_handler(CommandHandler("meet", meet, run_async=True))
     dp.add_handler(MessageHandler(Filters.text, echo, run_async=True))
 
     updater.start_polling()
