@@ -1,5 +1,5 @@
 from telegram.ext import Updater
-from telegram.ext import CommandHandler, Job, Filters, MessageHandler
+from telegram.ext import CommandHandler, Filters, MessageHandler
 from telegram import ChatAction
 
 from chromium_Scripts import browser, telegram_bot_sendtext
