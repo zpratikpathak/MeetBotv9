@@ -1,8 +1,6 @@
 from chromium_Scripts import browser
 from automate import updater
 from telegram import ChatAction
-
-
 import os, time
 from os import execl
 from sys import executable
