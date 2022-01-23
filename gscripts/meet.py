@@ -54,6 +54,8 @@ def meet_url(context, url_meet):
             ).click()
             time.sleep(10)
 
+        context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.TYPING)
+
         time.sleep(10)
 
         browser.save_screenshot("screenshot.png")

@@ -99,7 +99,19 @@ def login(update, context):
                 time.sleep(20)
 
             browser.get("https://meet.google.com")
+            browser.save_screenshot("ss.png")
+            context.bot.send_chat_action(
+                chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+            mid = context.bot.send_photo(
+                chat_id=USER_ID, photo=open("ss.png", "rb"), timeout=120
+            ).message_id
+            os.remove("ss.png")
             time.sleep(7)
+
+            context.bot.send_message(
+                chat_id=USER_ID,
+                text="Logged In Successfully.",
+            )
 
             pickle.dump("Meet Login: True", open("gmeet.pkl", "wb"))
 
