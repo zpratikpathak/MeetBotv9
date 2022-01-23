@@ -1,3 +1,7 @@
+from gscripts.meet import meet, close
+from gscripts.login import login
+import shutil
+import pickle
 from telegram.ext import Updater
 from telegram.ext import CommandHandler, Filters, MessageHandler
 from telegram import ChatAction
@@ -12,12 +16,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-import pickle
-import shutil
-
-from gscripts.login import login
-from gscripts.meet import meet
-
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USER_ID = os.getenv("USER_ID")
@@ -26,6 +24,8 @@ updater = Updater(token=BOT_TOKEN, use_context=True)
 dp = updater.dispatcher
 
 # Feature addition autowrite userid in .env file
+
+
 def start(update, context):
     user = update.message.from_user
     # print(user)
@@ -56,7 +56,7 @@ def help(update, context):
     if user["id"] == int(USER_ID):
         context.bot.send_message(
             chat_id=USER_ID,
-            text="/login - Login in Google Meet\n/meet - Join a meet\n/status - Screenshot of Joined meet\n/restart - To leave a meeting\n/reset - Reset chrome browser (in Development)\n/owner-To know about me\n/help - To Display this message",
+            text="/login - Login in Google Meet\n/meet - Join a meet\n/close - Leave the meeting\n/status - Screenshot of Joined meet\n/restart - restart the GMeetrobot\n/reset - Reset chrome browser\n/owner-To know about me\n/help - To Display this message",
         )
     else:
         update.message.reply_text(
@@ -74,7 +74,8 @@ def owner(update, context):
 def restart(update, context):
     user = update.message.from_user
     if user["id"] == int(USER_ID):
-        context.bot.send_message(chat_id=USER_ID, text="Restarting, Please wait!")
+        context.bot.send_message(
+            chat_id=USER_ID, text="Restarting, Please wait!")
         pickle.dump("restart msg check", open("restart.pkl", "wb"))
         browser.quit()
         execl(executable, executable, "automate.py")
@@ -88,7 +89,8 @@ def status(update, context):
     user = update.message.from_user
     if user["id"] == int(USER_ID):
         browser.save_screenshot("snapshot.png")
-        context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+        context.bot.send_chat_action(
+            chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
         context.bot.send_photo(
             chat_id=USER_ID, photo=open("snapshot.png", "rb"), timeout=100
         )
@@ -144,6 +146,7 @@ def main():
     dp.add_handler(CommandHandler("reset", reset, run_async=True))
     dp.add_handler(CommandHandler("login", login, run_async=True))
     dp.add_handler(CommandHandler("meet", meet, run_async=True))
+    dp.add_handler(CommandHandler("close", close, run_async=True))
     dp.add_handler(MessageHandler(Filters.text, echo, run_async=True))
 
     updater.start_polling()

@@ -1,3 +1,4 @@
+import pathlib
 from selenium import webdriver
 import chromedriver_autoinstaller
 import requests
@@ -8,7 +9,7 @@ load_dotenv()
 
 BOT_TOKEN = os.getenv("BOT_TOKEN")
 USER_ID = os.getenv("USER_ID")
-import pathlib
+
 
 scriptDirectory = pathlib.Path().absolute()
 
@@ -16,13 +17,10 @@ scriptDirectory = pathlib.Path().absolute()
 options = webdriver.ChromeOptions()
 options.add_argument("--disable-infobars")
 options.add_argument("--window-size=1200,800")
-options.add_argument("--disable-web-security")
-options.add_argument("--allow-running-insecure-content")
+# options.add_argument("--disable-web-security")
+# options.add_argument("--allow-running-insecure-content")
 options.add_argument(f"user-data-dir={scriptDirectory}\\ChromiumData")
 
-options.add_argument(
-    "user-agent='User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.107 Safari/537.36'"
-)
 
 options.add_experimental_option(
     "prefs",

@@ -1,6 +1,7 @@
 from chromium_Scripts import browser
 from telegram import ChatAction
-import os, time
+import os
+import time
 from os import execl
 from sys import executable
 from dotenv import load_dotenv
@@ -26,6 +27,14 @@ def meet_url(context, url_meet):
         browser.get(url_meet)
         time.sleep(3)
 
+        browser.save_screenshot("ss.png")
+        context.bot.send_chat_action(
+            chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+        mid = context.bot.send_photo(
+            chat_id=USER_ID, photo=open("ss.png", "rb"), timeout=120
+        ).message_id
+        os.remove("ss.png")
+
         if browser.find_elements_by_xpath(
             '//*[@id="yDmH0d"]/div[3]/div/div[2]/div[3]/div'
         ):
@@ -47,10 +56,11 @@ def meet_url(context, url_meet):
 
         time.sleep(10)
 
-        browser.save_screenshot("sreenshot.png")
-        context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+        browser.save_screenshot("screenshot.png")
+        context.bot.send_chat_action(
+            chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
         mid = context.bot.send_photo(
-            chat_id=USER_ID, photo=open("ss.png", "rb"), timeout=120
+            chat_id=USER_ID, photo=open("screenshot.png", "rb"), timeout=120
         ).message_id
         os.remove("screenshot.png")
 
@@ -66,7 +76,8 @@ def meet_url(context, url_meet):
         context.bot.send_message(
             chat_id=USER_ID, text="Error occurred! Fix error and retry!"
         )
-        context.bot.send_message(chat_id=USER_ID, text="Try /reset to fix the issue")
+        context.bot.send_message(
+            chat_id=USER_ID, text="Try /reset to fix the issue")
         context.bot.send_message(chat_id=USER_ID, text=str(e))
         execl(executable, executable, "automate.py")
 
@@ -96,6 +107,39 @@ def meet(update, context):
             context.bot.send_message(
                 chat_id=USER_ID, text="/meet https://meet.google.com/meet-code-value"
             )
+    else:
+        update.message.reply_text(
+            "You are not authorized to use this bot.\nUse /owner to know about me"
+        )
+
+
+def close(update, context):
+    user = update.message.from_user
+    if user["id"] == int(USER_ID):
+        context.bot.send_chat_action(chat_id=USER_ID, action=ChatAction.TYPING)
+
+        if browser.find_elements_by_xpath(
+            '//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[2]/div/div[6]/span/button'
+        ):
+            browser.find_element_by_xpath(
+                '//*[@id="ow3"]/div[1]/div/div[9]/div[3]/div[10]/div[2]/div/div[6]/span/button'
+            ).click()
+            time.sleep(3)
+
+        browser.save_screenshot("screenshot.png")
+        context.bot.send_chat_action(
+            chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+        mid = context.bot.send_photo(
+            chat_id=USER_ID, photo=open("screenshot.png", "rb"), timeout=120
+        ).message_id
+        os.remove("screenshot.png")
+
+        context.bot.send_message(
+            chat_id=USER_ID,
+            text="Bye! Hope you had a great meeting!\nSee you soon! 😉",
+        )
+        browser.quit()
+        execl(executable, executable, "automate.py")
     else:
         update.message.reply_text(
             "You are not authorized to use this bot.\nUse /owner to know about me"
