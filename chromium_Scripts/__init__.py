@@ -21,8 +21,6 @@ options.add_argument("--window-size=1200,800")
 # options.add_argument("--disable-web-security")
 # options.add_argument("--allow-running-insecure-content")
 options.add_argument(f"user-data-dir={scriptDirectory}\\ChromiumData")
-
-
 options.add_experimental_option(
     "prefs",
     {
