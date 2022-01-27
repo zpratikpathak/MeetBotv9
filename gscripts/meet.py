@@ -128,18 +128,24 @@ def close(update, context):
             ).click()
             time.sleep(3)
 
-        browser.save_screenshot("screenshot.png")
-        context.bot.send_chat_action(
-            chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
-        mid = context.bot.send_photo(
-            chat_id=USER_ID, photo=open("screenshot.png", "rb"), timeout=120
-        ).message_id
-        os.remove("screenshot.png")
+            browser.save_screenshot("screenshot.png")
+            context.bot.send_chat_action(
+                chat_id=USER_ID, action=ChatAction.UPLOAD_PHOTO)
+            mid = context.bot.send_photo(
+                chat_id=USER_ID, photo=open("screenshot.png", "rb"), timeout=120
+            ).message_id
+            os.remove("screenshot.png")
 
-        context.bot.send_message(
-            chat_id=USER_ID,
-            text="Bye! Hope you had a great meeting!\nSee you soon! 😉",
-        )
+            context.bot.send_message(
+                chat_id=USER_ID,
+                text="Bye! Hope you had a great meeting!\nSee you soon! 😉",
+            )
+        else:
+            context.bot.send_message(
+                chat_id=USER_ID,
+                text="You are not in a meeting!",
+            )
+
         browser.quit()
         execl(executable, executable, "automate.py")
     else:
